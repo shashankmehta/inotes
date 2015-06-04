@@ -1,12 +1,18 @@
 {
   "name": "iNotes",
-  "version": "0.0.1",
-  "description": "Extract your notes from iBooks",
-  "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
-  },
+  "version": "1.0.0",
+  "description": "Extract your notes from Apple's iBooks",
   "author": "Shashank Mehta <me@shashankmehta.in>",
   "license": "MIT",
+  "repository": "shashankmehta/iNotes",
+  "keywords": [
+    "notes",
+    "highlights",
+    "iBooks",
+    "apple",
+    "iNotes",
+    "osx"
+  ],
   "dependencies": {
     "chalk": "^1.0.0",
     "sqlite3": "^3.0.8",
