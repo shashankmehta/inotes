@@ -1,6 +1,6 @@
 {
   "name": "inotes",
-  "version": "1.0.0",
+  "version": "1.0.1",
   "description": "Extract your notes from Apple's iBooks",
   "author": "Shashank Mehta <me@shashankmehta.in>",
   "license": "MIT",
