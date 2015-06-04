@@ -1,10 +1,10 @@
 {
-  "name": "iNotes",
+  "name": "inotes",
   "version": "1.0.0",
   "description": "Extract your notes from Apple's iBooks",
   "author": "Shashank Mehta <me@shashankmehta.in>",
   "license": "MIT",
-  "repository": "shashankmehta/iNotes",
+  "repository": "shashankmehta/inotes",
   "keywords": [
     "notes",
     "highlights",
