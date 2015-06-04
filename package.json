@@ -1,8 +1,7 @@
 {
-  "name": "ExtractiBooks",
+  "name": "iNotes",
   "version": "0.0.1",
   "description": "Extract your notes from iBooks",
-  "main": "index.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1"
   },
@@ -12,5 +11,9 @@
     "chalk": "^1.0.0",
     "sqlite3": "^3.0.8",
     "user-home": "^1.1.1"
-  }
+  },
+  "bin": {
+    "inotes": "index.js"
+  },
+  "preferGlobal": "true"
 }

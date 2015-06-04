@@ -1,3 +1,5 @@
+#! /usr/bin/env node
+
 var sqlite3  = require('sqlite3').verbose();
 var fs       = require('fs');
 var chalk    = require('chalk');
@@ -199,7 +201,6 @@ var sql = {
     sql._loaded++;
 
     if(sql._loaded === 2){
-      colors.ok('OK');
       sql.collateNotes();
       sql.createMarkdown();
     }
