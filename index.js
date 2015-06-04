@@ -2,10 +2,14 @@ var sqlite3  = require('sqlite3').verbose();
 var fs       = require('fs');
 var chalk    = require('chalk');
 var userHome = require('user-home');
+var MD       = require('./markdown-create.js');
 
 const RESULT_DIRECTORY_NAME = "iBooks exports for Evernote";
 const BOOKS_DIR = userHome + '/Library/Containers/com.apple.iBooksX/Data/Documents/BKLibrary';
 const NOTES_DIR = userHome + '/Library/Containers/com.apple.iBooksX/Data/Documents/AEAnnotation'
+
+var args = process.argv.slice(2);
+var saveDir = args[0];
 
 var colors = {
   ok: function(){
@@ -133,7 +137,6 @@ var sql = {
     for(var i in notes){
       var note = notes[i];
       if(typeof books[note.bookID] === 'undefined'){
-        console.log('missing book');
         continue;
       }
 
@@ -143,6 +146,48 @@ var sql = {
 
       books[note.bookID].notes.push(note);
     }
+  },
+
+  createMarkdown: function(){
+    var books = this.books;
+    for(var i in this.books){
+      var book = books[i];
+      var md = new MD(book.title + ' _by ' + book.author + '_');
+
+      for(var i in book.notes){
+        var note = book.notes[i];
+        var fullText = this._textClean(note.fullText);
+        var text = this._textClean(note.note);
+
+        if(fullText !== text){
+          text = fullText.replace(text, '**' + text + '**');
+        }
+
+        md.quote(text);
+      }
+
+      md.save(saveDir + book.title.replace(/ /g, '_') + '.md', function(err){
+        if(err){
+          colors.error(err);
+        }
+        else {
+          colors.ok('Saved ' + book.title.replace(/ /g, '_'));
+        }
+      });
+    }
+  },
+
+  _textClean: function(text){
+    text = text.replace(/\n/g, ' ');
+
+    // Need to trim space first
+    if(text.substr(-1) === ' '){
+      text = text.substr(0,text.length - 1);
+    }
+    if(text.substr(-1) === '.'){
+      text = text.substr(0,text.length - 1);
+    }
+    return text;
   },
 
   close: function(){
@@ -156,6 +201,7 @@ var sql = {
     if(sql._loaded === 2){
       colors.ok('OK');
       sql.collateNotes();
+      sql.createMarkdown();
     }
   }
 }
@@ -171,6 +217,15 @@ var proc = {
 }
 
 var exec = function(){
+  if(typeof saveDir === 'undefined'){
+    colors.error('Please provide the download directory');
+    colors.error('\t eg: node index.js downloads');
+    proc.exitWithError();
+  }
+  else if(saveDir.substr(-1) !== '/'){
+    saveDir+= '/';
+  }
+
   chalk.green('asd');
   system.getDBNames();
   sql.init();
